@@ -39,26 +39,26 @@ O disco virtual foi criado com aproximadamente **8 GB**, utilizando alocação d
 A estrutura de particionamento atual é aproximadamente:
 
 ```text
-sda
-├── sda1
-│   └── /boot (~873 MB, ext4)
-└── sda5
-    └── sda5_crypt (~7,7 GB, criptografado)
-        └── fsayuri-42
-            ├── root (~6,9 GB, ext4, montado em /)
-            └── swap_1 (~818 MB, swap)
+sda                         8G
+├─sda1                    838M   /boot
+├─sda2                      1K
+└─sda5                    7.2G
+  └─sda5_crypt            7.2G
+    ├─fsayuri--42--vg-root
+    │                     6.4G   /
+    └─fsayuri--42--vg-swap_1
+                          780M   [SWAP]
 ```
 
-A partição principal foi criptografada e utilizada como base para o LVM (Logical Volume Manager).
+A partição `sda5` foi criptografada e utilizada como base para o LVM (**Logical Volume Manager**).
 
-Dentro do Volume Group `fsayuri-42`, foram criados dois Logical Volumes:
+Dentro do Volume Group `fsayuri-42-vg`, foram criados dois Logical Volumes:
 
-- `root`, com aproximadamente **6,9 GB**, utilizando `ext4` e montado em `/`;
-- `swap_1`, com aproximadamente **818 MB**, utilizado como área de swap.
+* `root`, com aproximadamente **6,4 GB**, utilizado pelo sistema de arquivos principal e montado em `/`;
 
-Essa estrutura mantém o sistema simples e com baixo uso de armazenamento, atendendo aos requisitos obrigatórios do projeto sem utilizar o esquema adicional de particionamento da parte bônus.
+* `swap_1`, com aproximadamente **780 MB**, utilizado como área de swap.
 
-> **Observação:** os valores acima devem ser conferidos na máquina final com `lsblk -f`, `pvs`, `vgs` e `lvs` antes da entrega.
+Essa estrutura mantém o sistema simples e com baixo uso de armazenamento, atendendo ao requisito obrigatório de utilizar pelo menos dois volumes lógicos dentro da área criptografada, sem utilizar o esquema adicional de particionamento apresentado na parte bônus.
 
 ### Segurança
 
